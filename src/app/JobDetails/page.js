@@ -9,19 +9,23 @@ import JobDetailsDescriptionCard from "../components/JobDetailsComponents/JobDet
 import JobDetailsRelatedCard from "../components/JobDetailsComponents/JobDetailsRelatedCard";
 import JobDetailsSidebar from "../components/JobDetailsComponents/JobDetailsSidebar";
 import { useJobs } from "../context/JobContext";
-import { useSearchParams } from "next/navigation";
+
 import Loading from "../components/Loading";
 
 const JobDetails = () => {
   const { items } = useJobs();
   const [currentJobDetails, setCurrentJobDetails] = useState(null);
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
-  const query = searchParams.get("query");
+  const [searchParams, setSearchParams] = useState(null);
+  const id = searchParams?.get("id");
+  const query = searchParams?.get("query");
 
   console.log("items", items);
   console.log("id", id);
   console.log("query", query);
+
+  useEffect(() => {
+    setSearchParams(new URLSearchParams(window.location.search));
+  }, []);
 
   useEffect(() => {
     if (items.length > 0) {
