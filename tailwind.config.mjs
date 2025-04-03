@@ -10,6 +10,9 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        textTitle: "var(--text-title)",
+        textSubtitle: "var(--text-subtitle)",
+        textBody: "var(--text-body)",
       },
     },
   },

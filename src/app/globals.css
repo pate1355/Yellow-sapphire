@@ -9,13 +9,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffbd59;
+    --foreground: #fff2de;
+    --background-secondary: #171717;
+    --foreground-secondary: #ffffff;
+    --text-title: #030712;
+    --text-subtitle: #111827;
+    --text-body: #374151;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--foreground-secondary);
+  background: var(--background-secondary);
   font-family: Arial, Helvetica, sans-serif;
 }
