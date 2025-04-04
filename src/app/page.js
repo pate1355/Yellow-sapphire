@@ -310,10 +310,16 @@ export default function Home() {
               totalPages={totalPages}
               query={query}
               items={items}
-              category={category}
               storedQuery={storedQuery}
               savedJobs={savedJobs}
               setSavedJobs={setSavedJobs}
+              category={category}
+              location={location}
+              minOfferedSalary={minOfferedSalary}
+              maxOfferedSalary={maxOfferedSalary}
+              datePosted={datePosted}
+              jobType={jobType}
+              experienceLevel={experienceLevel}
             />
           </section>
         )}
@@ -387,11 +393,36 @@ const JobResultsListing = ({
   totalPages,
   query,
   items,
-  category,
   storedQuery,
   savedJobs,
   setSavedJobs,
+  category,
+  location,
+  minOfferedSalary,
+  maxOfferedSalary,
+  datePosted,
+  jobType,
+  experienceLevel,
 }) => {
+  const getFilterText = () => {
+    const filters = [];
+
+    if (query) filters.push(`Query: "${query}"`);
+    if (Array.isArray(category) && category.length > 0)
+      filters.push(`Category: ${category.join(", ")}`);
+    if (location) filters.push(`Location: ${location}`);
+    if (minOfferedSalary !== 30000 || maxOfferedSalary !== 120000) {
+      filters.push(`Salary Range: ${minOfferedSalary} - ${maxOfferedSalary}`);
+    }
+    if (datePosted !== "All") filters.push(`Date Posted: ${datePosted}`);
+    if (Array.isArray(jobType) && jobType.length > 0)
+      filters.push(`Job Type: ${jobType.join(", ")}`);
+    if (Array.isArray(experienceLevel) && experienceLevel.length > 0)
+      filters.push(`Experience Level: ${experienceLevel.join(", ")}`);
+
+    return filters.length > 0 ? filters.join(" | ") : "your selected criteria";
+  };
+
   return (
     <>
       {totalJobsFound > 0 ? (
@@ -459,12 +490,18 @@ const JobResultsListing = ({
           </div>
         </section>
       ) : (
-        <div className="flex justify-center items-center w-full text-black">
-          <p className="">
-            No Jobs found for category{" "}
-            <span className="text-lg font-bold">
-              {category.length > 0 ? category : ""}
-            </span>
+        <div className="flex justify-center items-center w-full text-black text-center">
+          <p>
+            No jobs found for your selected filters:{" "}
+            <span className="text-lg font-bold">{getFilterText()}</span>.
+            <br />
+            {minOfferedSalary !== 30000 || maxOfferedSalary !== 120000 ? (
+              <span>
+                {" "}
+                There are no jobs available within the selected salary range.
+              </span>
+            ) : null}
+            Try adjusting your filters to see more results.
           </p>
         </div>
       )}
