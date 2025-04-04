@@ -2,7 +2,6 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <footer className="bg-[#f4b860] py-8 px-10 flex justify-between items-center">
-      {/* Left - Logo */}
       <div>
         <Image
           src="/YellowSapphireIcon.png"
@@ -11,7 +10,7 @@ export default function Footer() {
           height={30}
         />
       </div>
-      {/* Middle - Navigation Links */}
+
       <nav aria-label="Footer Navigation">
         <ul className="flex flex-col items-start border-l border-black pl-4 space-y-2">
           <li>
@@ -26,7 +25,7 @@ export default function Footer() {
           </li>
         </ul>
       </nav>
-      {/* Right - Copyright & Policies */}
+
       <div className="text-right">
         <ul className="space-y-2">
           <li>

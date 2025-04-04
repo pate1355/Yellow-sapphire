@@ -7,7 +7,6 @@ import Link from "next/link";
 function JobDetailsSidebar({ job }) {
   return job && Object.keys(job).length > 0 ? (
     <div className=" md:w-[15rem] p-8  bg-[#FFF2DE] text-black rounded-[20px] shadow-md">
-      {/* Buttons Section */}
       <div className="flex-col gap-2 w-full hidden md:flex md:visible">
         <Link
           className="bg-background text-center text-textTitle py-2 rounded-lg"

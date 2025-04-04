@@ -10,6 +10,38 @@ const JobDetailsRelatedCard = ({ job }) => {
   const { items, setSavedJobs, savedJobs } = useJobs();
   const currentJobTitle = job?.job_title;
   const currentJob = job?.id;
+  const [jobPostedDate, setJobPostedDate] = useState("");
+
+  useEffect(() => {
+    const postedDate = new Date(job?.posted_date);
+
+    const now = new Date();
+    const diffInMs = now - postedDate;
+    const diffInHours = diffInMs / (1000 * 60 * 60);
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+
+    if (diffInHours <= 24) {
+      setJobPostedDate("24 hours ago");
+    } else if (diffInDays === 7) {
+      setJobPostedDate("1 week ago");
+    } else if (diffInDays === 14) {
+      setJobPostedDate("2 weeks ago");
+    } else if (diffInDays === 21) {
+      setJobPostedDate("3 weeks ago");
+    } else if (diffInDays === 28) {
+      setJobPostedDate("4 weeks ago");
+    } else if (diffInDays === 30) {
+      setJobPostedDate("1 month ago");
+    } else if (
+      diffInDays < 30 &&
+      diffInDays !== 7 &&
+      diffInDays !== 14 &&
+      diffInDays !== 21 &&
+      diffInDays !== 28
+    ) {
+      setJobPostedDate(`${Math.round(diffInDays)} days ago`);
+    }
+  }, [job]);
 
   useEffect(() => {
     if (currentJobTitle && items.length > 0) {
@@ -21,14 +53,10 @@ const JobDetailsRelatedCard = ({ job }) => {
             .includes(currentJobTitle?.toLowerCase()) && job.id !== job.id
       );
 
-      // If no related jobs found, fallback to any other job
       if (relatedJobs.length === 0) {
         relatedJobs = items.filter((job) => job.id !== currentJob);
       }
 
-      console.log("Related Jobs:", relatedJobs);
-
-      // Shuffle the related jobs array and limit to 3 jobs
       const shuffledRelatedJobs = relatedJobs.sort(() => Math.random() - 0.5);
 
       const limitedRelatedJobs = shuffledRelatedJobs.slice(0, 3);
@@ -37,7 +65,6 @@ const JobDetailsRelatedCard = ({ job }) => {
   }, [currentJob, currentJobTitle, items, job.id]);
 
   useEffect(() => {
-    // Set bookmark state for each job
     setBookmarkedJobs(
       relatedJobs.map((job) =>
         savedJobs.some((savedJob) => savedJob.id === job.id)
@@ -49,18 +76,13 @@ const JobDetailsRelatedCard = ({ job }) => {
     const isBookmarked = bookmarkedJobs[relatedJobs.indexOf(job)];
 
     if (isBookmarked) {
-      // Remove job from saved jobs
       setSavedJobs((prev) => prev.filter((savedJob) => savedJob.id !== job.id));
-      console.log("Job removed from saved jobs:", job);
     } else {
-      // Add job only if it's not already in savedJobs
       setSavedJobs((prev) =>
         prev.some((savedJob) => savedJob.id === job.id) ? prev : [...prev, job]
       );
-      console.log("Job added to saved jobs:", job);
     }
 
-    // Toggle bookmark state for the specific job
     setBookmarkedJobs((prev) => {
       const updatedBookmarks = [...prev];
       updatedBookmarks[relatedJobs.indexOf(job)] =
@@ -77,36 +99,34 @@ const JobDetailsRelatedCard = ({ job }) => {
   return job && Object.keys(job).length > 0 ? (
     <div className="w-full flex flex-col gap-4  p-0 rounded-[20px] ">
       <h2 className="text-4xl font-semibold mb-4 text-black">Related Jobs</h2>
-      {/* Map through relatedJobs */}
+
       {relatedJobs.map((job) => (
         <div
           key={job.id}
           className="w-full flex flex-col gap-4 bg-[#FFF2DE] p-6 rounded-[20px] shadow-md"
         >
           <div className="flex justify-between items-center">
-            {/* Posted Date */}
             <div className="flex items-center justify-center bg-white p-2 rounded-[8px] border border-black">
-              <span className="text-gray-600 text-sm">1 Week ago</span>
+              <span className="text-gray-600 text-sm">{jobPostedDate}</span>
             </div>
 
-            {/* Bookmark Button */}
             <motion.button
               className="p-3 cursor-pointer"
               onClick={() => handleClick(job)}
               aria-label="Bookmark this job"
-              whileTap={{ scale: 0.9 }} // Button shrinks slightly when clicked
+              whileTap={{ scale: 0.9 }}
             >
               <motion.div
                 animate={{
-                  scale: bookmarkedJobs[relatedJobs.indexOf(job)] ? 1.2 : 1, // Scale up slightly on bookmark
+                  scale: bookmarkedJobs[relatedJobs.indexOf(job)] ? 1.2 : 1,
                   rotate: bookmarkedJobs[relatedJobs.indexOf(job)]
                     ? [0, 10, -10, 5, -5, 0]
-                    : 0, // Rotates back and forth
+                    : 0,
                 }}
                 transition={{
-                  type: "tween", // Use 'tween' instead of 'spring' for multiple keyframes
+                  type: "tween",
                   ease: "easeInOut",
-                  duration: 0.4, // Animation duration
+                  duration: 0.4,
                 }}
               >
                 <Bookmark
@@ -126,7 +146,6 @@ const JobDetailsRelatedCard = ({ job }) => {
             </motion.button>
           </div>
 
-          {/* Job Details */}
           <div className="text-left">
             <h2 className="text-lg text-textTitle font-bold">
               {job?.job_title}
@@ -138,7 +157,6 @@ const JobDetailsRelatedCard = ({ job }) => {
           </div>
 
           <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch">
-            {/* Tags Section */}
             <div className="grid grid-cols-2 w-full gap-2 text-sm text-textBody">
               <div className="flex items-center gap-2">
                 <Briefcase className="w-4 h-4" />{" "}
@@ -159,7 +177,6 @@ const JobDetailsRelatedCard = ({ job }) => {
               </div>
             </div>
 
-            {/* Buttons Section */}
             <div className="flex flex-col gap-2 md:w-40">
               <Link
                 className="bg-background text-center text-textTitle py-2 rounded-lg"

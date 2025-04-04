@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 const companies = [
   {
     name: "Instagram",
@@ -47,10 +45,7 @@ const TopCompanies = () => {
             <p className="bg-black text-white px-4 py-1 rounded-lg mt-2">
               {company.jobs} open jobs
             </p>
-            <button
-              onClick={() => console.log("Apply Now")}
-              className="mt-3 bg-[#FFBD59] text-black font-semibold px-4 py-2 rounded-lg"
-            >
+            <button className="mt-3 bg-[#FFBD59] text-black font-semibold px-4 py-2 rounded-lg">
               APPLY NOW
             </button>
           </div>

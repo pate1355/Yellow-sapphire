@@ -13,13 +13,10 @@ export const SortDropDownMenu = ({
 }) => {
   return (
     <>
-      {/* Displaying Search Results Summary */}
       <div className="text-black font-bold">
         Showing {currentPageJobs} of {totalJobsFound} Results for{" "}
         {query ? query : storedQuery.toUpperCase() + " as of last search"}
       </div>
-
-      {/* Sort By Menu */}
 
       <Dropdown />
     </>

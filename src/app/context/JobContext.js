@@ -59,5 +59,4 @@ export const JobProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use JobContext
 export const useJobs = () => useContext(JobContext);

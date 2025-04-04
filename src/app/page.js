@@ -11,7 +11,7 @@ import { SortDropDownMenu } from "./components/ReusableComponets/SortDropDownMen
 import { useJobs } from "./context/JobContext";
 import { useCallback } from "react";
 
-const jobsPerPage = 10; // Number of jobs per page
+const jobsPerPage = 10;
 
 export default function Home() {
   const { savedJobs, setSavedJobs } = useJobs();
@@ -33,37 +33,31 @@ export default function Home() {
   const [datePosted, setDatePosted] = useState("All");
   const [location, setLocation] = useState("");
 
-  // Get jobs for current page
   const startIndex = (currentPage - 1) * jobsPerPage;
 
   const filterByLocation = useCallback((location, filteredJobs) => {
     let filtered = filteredJobs;
 
-    // Trim the location and check if it's non-empty
     const locationTrimmed = location?.trim();
 
-    // If location is empty, return filteredJobs as is
     if (!locationTrimmed) return filtered;
 
-    // If location contains a comma (i.e., city and province are specified)
     if (locationTrimmed.includes(",")) {
       const [inputCity, inputProvince] = locationTrimmed
         .split(",")
         .map((loc) => loc.trim());
 
-      // Filter jobs based on city and/or province match
       filtered = filtered.filter((item) => {
         const [jobCity, jobProvince] = item.location
           .split(",")
           .map((loc) => loc.trim());
 
         const matchesCity = jobCity === inputCity;
-        const matchesProvince = jobProvince === inputProvince; // Exact match for province
+        const matchesProvince = jobProvince === inputProvince;
 
         return matchesCity && matchesProvince;
       });
     } else {
-      // If no comma, filter by substring match of location
       filtered = filtered.filter((item) =>
         item.location.trim().includes(locationTrimmed)
       );
@@ -80,21 +74,20 @@ export default function Home() {
       let dateLimit;
 
       if (datePosted === "Last 24 Hours") {
-        dateLimit = new Date(currentDate.getTime() - 24 * 60 * 60 * 1000); // 24 hours ago
+        dateLimit = new Date(currentDate.getTime() - 24 * 60 * 60 * 1000);
       } else if (datePosted === "Last Week") {
-        dateLimit = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000); // 7 days ago
+        dateLimit = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
       } else if (datePosted === "Last 2 Weeks") {
-        dateLimit = new Date(currentDate.getTime() - 14 * 24 * 60 * 60 * 1000); // 14 days ago
+        dateLimit = new Date(currentDate.getTime() - 14 * 24 * 60 * 60 * 1000);
       } else if (datePosted === "Last Month") {
-        dateLimit = new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000); // 30 days ago
+        dateLimit = new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000);
       }
 
       filtered = filtered.filter((item) => {
-        // Ensure the posted_date is in the correct ISO format
-        const datePosted = item.posted_date.replace(" ", "T"); // Convert space to T for ISO format (e.g., "2025-03-17 05:12:08.777947" becomes "2025-03-17T05:12:08.777947")
-        const parsedDatePosted = new Date(datePosted); // Parse the date into a Date object
+        const datePosted = item.posted_date.replace(" ", "T");
+        const parsedDatePosted = new Date(datePosted);
 
-        return parsedDatePosted >= dateLimit; // Compare the dates
+        return parsedDatePosted >= dateLimit;
       });
     }
 
@@ -157,35 +150,26 @@ export default function Home() {
   useEffect(() => {
     setLoading(true);
     try {
-      // Filter jobs based on selected job types and experience levels
       let filteredJobs = items;
 
-      // Filter by location
       filteredJobs = filterByLocation(location, filteredJobs);
 
-      // Filter by date posted
       filteredJobs = filterByDatePosted(datePosted, filteredJobs);
 
-      // Filter by offered salary
       filteredJobs = filterBySalary(
         minOfferedSalary,
         maxOfferedSalary,
         filteredJobs
       );
 
-      // Filter by job type
       filteredJobs = filterByJobType(jobType, filteredJobs);
 
-      // Filter by experience level
       filteredJobs = filterByExperienceLevel(experienceLevel, filteredJobs);
 
-      // Filter by job category
       filteredJobs = filterByJobCategory(category, filteredJobs);
 
-      // Set the total number of jobs found based on filtered results
       setTotalJobsFound(filteredJobs.length);
 
-      // Handle pagination and set the current jobs to show
       setTotalPages(Math.ceil(filteredJobs.length / jobsPerPage));
       setCurrentJobs(filteredJobs.slice(startIndex, startIndex + jobsPerPage));
     } catch (error) {
@@ -219,10 +203,9 @@ export default function Home() {
     const fetchData = async (finalQuery) => {
       try {
         let url;
-        const baseQuery = finalQuery.replace(/(real|local|random)/, "").trim(); // Get the base query without flags
+        const baseQuery = finalQuery.replace(/(real|local|random)/, "").trim();
         const queryParams = [];
 
-        // Check for flags and append them to the URL
         if (finalQuery.includes("local")) {
           queryParams.push("local=true");
         }
@@ -233,12 +216,9 @@ export default function Home() {
           queryParams.push("real=true");
         }
 
-        // Build the final URL
         url = `/api/jobs?query=${baseQuery}${
           queryParams.length ? "&" + queryParams.join("&") : ""
         }`;
-
-        console.log("URL", url);
 
         const response = await fetch(url);
         if (!response.ok) {
@@ -306,7 +286,6 @@ export default function Home() {
             className="flex flex-col md:flex-row gap-2 p-4 bg-white"
             aria-label="Job Results"
           >
-            {/* Sidebar Section */}
             <SidebarSection
               jobCount={jobCount}
               setJobType={setJobType}
@@ -324,7 +303,6 @@ export default function Home() {
               setLocation={setLocation}
             />
 
-            {/* Job Results Section */}
             <JobResultsListing
               totalJobsFound={totalJobsFound}
               currentJobs={currentJobs}
@@ -340,11 +318,9 @@ export default function Home() {
           </section>
         )}
 
-        {/* Top Companies Section */}
         <TopCompaniesSection />
       </main>
 
-      {/* Footer Section */}
       <FooterSection />
     </div>
   );
@@ -368,9 +344,7 @@ const SidebarSection = ({
 }) => {
   return (
     <>
-      {/* SidebarSection */}
       <div className="relative w-full md:w-[406px]">
-        {/* Filter Button - Only Visible on Small Screens */}
         <button
           className="md:hidden w-full px-4 py-2 bg-[#FFBD59] text-black rounded-md"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -378,7 +352,6 @@ const SidebarSection = ({
           {isSidebarOpen ? "Close Filters" : "Filter"}
         </button>
 
-        {/* Sidebar (Sticky on Large Screens, Expands Below Button on Small Screens) */}
         <aside
           className={`md:sticky md:top-6 md:w-auto md:h-auto ${
             isSidebarOpen
@@ -421,7 +394,6 @@ const JobResultsListing = ({
 }) => {
   return (
     <>
-      {/* Job Result Listings */}
       {totalJobsFound > 0 ? (
         <section
           className="flex flex-col justify-between gap-4 w-full"
@@ -451,8 +423,7 @@ const JobResultsListing = ({
               />
             ))}
           </ul>
-          {console.log("item", totalJobsFound)};
-          {console.log("item", items.length)};{/* Pagination Controls */}
+
           <div className="flex flex-wrap justify-center gap-2 mt-4 w-full">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -504,7 +475,6 @@ const JobResultsListing = ({
 const TopCompaniesSection = () => {
   return (
     <>
-      {/* Top Companies Section */}
       <section aria-label="Top Companies">
         <TopCompanies />
       </section>
@@ -515,7 +485,6 @@ const TopCompaniesSection = () => {
 const FooterSection = () => {
   return (
     <>
-      {/* Footer Section */}
       <footer aria-label="Footer">
         <Footer />
       </footer>

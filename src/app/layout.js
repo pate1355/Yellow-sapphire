@@ -1,20 +1,16 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import ScrollToTop from "./components/ScrollToTop";
 import { JobProvider } from "./context/JobContext";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const roboto = Roboto({
+  variable: "--font-roboto",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata = {
-  title: "YELLOW SAPPHIRE",
+  title: "Yellow Sapphire",
   icons: {
     icon: [
       {
@@ -68,9 +64,7 @@ export default function RootLayout({ children }) {
         />
         <link rel="shortcut icon" href="/yellow-sapphire.ico" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${roboto.className} antialiased`}>
         <JobProvider>
           {children}
           <ScrollToTop />

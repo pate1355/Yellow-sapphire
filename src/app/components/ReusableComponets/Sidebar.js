@@ -79,12 +79,12 @@ const Sidebar = ({
       if (selectedCity.trim() !== "") {
         return { locationName: selectedCity };
       }
-      return { locationName: "" }; // Ensure function always returns an object
+      return { locationName: "" };
     };
 
     const { locationName } = getLocation();
     setLocation(locationName);
-  }, [selectedProvince, selectedCity, setLocation]); // Removed setLocation from dependency array
+  }, [selectedProvince, selectedCity, setLocation]);
 
   const categories = [
     "Technology & IT",
@@ -168,7 +168,6 @@ const Sidebar = ({
       aria-label="Filters"
       className=" p-5 bg-[#FFF2DE] max-h-[90vh] sticky top-6 overflow-y-auto rounded-[20px] text-black"
     >
-      {/* Select Province */}
       <div className="mt-4">
         <label
           htmlFor="provinceSelect"
@@ -192,7 +191,6 @@ const Sidebar = ({
         </div>
       </div>
 
-      {/* Select City (Dynamic) */}
       {selectedProvince && (
         <div className="mt-4">
           <label
@@ -218,8 +216,6 @@ const Sidebar = ({
         </div>
       )}
 
-      {/* Category Filters */}
-
       <JobCategories
         categories={categories}
         jobCounts={jobCount}
@@ -227,7 +223,6 @@ const Sidebar = ({
         setCategory={setCategory}
       />
 
-      {/* Job Type Filter */}
       <fieldset className="mt-4">
         <legend className="text-sm font-semibold block mb-2">Job Type</legend>
         {[
@@ -263,7 +258,6 @@ const Sidebar = ({
         ))}
       </fieldset>
 
-      {/* Experience Level */}
       <fieldset className="mt-4">
         <legend className="text-sm font-semibold block mb-2">
           Experience Level
@@ -298,7 +292,6 @@ const Sidebar = ({
         setMaxOfferedSalary={setMaxOfferedSalary}
       />
 
-      {/* Date Posted */}
       <fieldset className="mt-4">
         <legend className="text-sm font-semibold block mb-2">
           Date Posted

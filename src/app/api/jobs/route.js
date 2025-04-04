@@ -12,7 +12,6 @@ export async function GET(req) {
     let data, error;
 
     if (real) {
-      console.log("🔍 Searching for real jobs...");
       if (!query) {
         return NextResponse.json(
           { error: "Query parameter is required" },
@@ -20,17 +19,15 @@ export async function GET(req) {
         );
       }
 
-      // Searching for jobs with 'query' in job_title or company_name
       const { data: realData, error: realError } = await supabase
         .from("job_post_data")
         .select("*")
         .or(`job_title.ilike.%${query}%,company_name.ilike.%${query}%`);
 
       data = realData;
-      console.log("✅ Found real jobs:", data.length);
+
       error = realError;
     } else if (local) {
-      console.log("🔍 Searching for local jobs...");
       if (!query) {
         return NextResponse.json(
           { error: "Query parameter is required" },
@@ -38,7 +35,6 @@ export async function GET(req) {
         );
       }
 
-      // Searching for jobs with 'query' in job_title or company_name, limiting to 10 results
       const { data: localData, error: localError } = await supabase
         .from("job_post_data")
         .select("*")
@@ -46,21 +42,16 @@ export async function GET(req) {
         .limit(10);
 
       data = localData;
-      console.log("✅ Found local jobs:", data.length);
 
       error = localError;
     } else if (random) {
-      console.log("🔍 Searching for random jobs...");
-
-      // Selecting all jobs and manually shuffling them
       const { data: allJobs, error: randomError } = await supabase
         .from("job_post_data")
         .select("*")
         .limit(10);
-      // Randomly select 10 jobs from the database
 
       data = allJobs;
-      console.log("✅ Found random jobs:", data.length);
+
       error = randomError;
     } else {
       return NextResponse.json(
@@ -77,16 +68,12 @@ export async function GET(req) {
       );
     }
 
-    // 🏷 Efficiently count job types using reduce()
     const jobCounts = data.reduce(
       (acc, job) => {
-        const type = job.job_type; // Get the job_type from the database
-        const experience = job.experience_required; // Get the experience_required from the database
-        const category = job.job_category; // Get the job_category from the database
+        const type = job.job_type;
+        const experience = job.experience_required;
+        const category = job.job_category;
 
-        // Sort date
-
-        // Mapping job types to the desired keys
         const typeMapping = {
           "Full Time": "full_time",
           "Part Time": "part_time",
@@ -96,14 +83,12 @@ export async function GET(req) {
           Temporary: "temporary",
         };
 
-        // Mapping experience levels to the desired keys
         const experienceMapping = {
           "Entry Level": "entry_level",
           Intermediate: "intermediate",
           Expert: "expert",
         };
 
-        // Mapping job categories to the desired keys (snake_case format)
         const categoryMapping = {
           "Technology & IT": "technology_it",
           "Healthcare & Medical": "healthcare_medical",
@@ -125,18 +110,15 @@ export async function GET(req) {
           "Non-profit & Charity": "nonprofit_charity",
         };
 
-        // If the job_type exists in the typeMapping, increment the count
         if (typeMapping[type]) {
           acc[typeMapping[type]] = (acc[typeMapping[type]] || 0) + 1;
         }
 
-        // If the experience_required exists in the experienceMapping, increment the count
         if (experienceMapping[experience]) {
           acc[experienceMapping[experience]] =
             (acc[experienceMapping[experience]] || 0) + 1;
         }
 
-        // If the job_category exists in the categoryMapping, increment the count
         if (categoryMapping[category]) {
           acc[categoryMapping[category]] =
             (acc[categoryMapping[category]] || 0) + 1;
@@ -145,7 +127,6 @@ export async function GET(req) {
         return acc;
       },
       {
-        // Initialize the counts for each key
         full_time: 0,
         part_time: 0,
         contract: 0,
@@ -175,8 +156,6 @@ export async function GET(req) {
         nonprofit_charity: 0,
       }
     );
-
-    console.log("✅ Job counts:");
 
     return NextResponse.json(
       {

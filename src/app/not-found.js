@@ -12,7 +12,7 @@ const NotFound = () => {
         autoplay
         style={{ width: "500px", height: "500px" }}
       />
-      {/* back to home page */}
+
       <div>
         <Link
           href="/"

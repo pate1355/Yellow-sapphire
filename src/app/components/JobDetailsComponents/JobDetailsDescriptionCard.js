@@ -6,7 +6,7 @@ export default function JobDetailsDescriptionCard({ job }) {
     <div className="bg-[#FFF2DE] md:w-full text-black  p-8 flex flex-col gap-4   rounded-[20px] shadow-sm">
       <h2 className="text-xl font-semibold mb-2">Job Description</h2>
       <br />
-      <pre className="mb-6 text-wrap font-mono">{job?.job_description}</pre>
+      <pre className="mb-6 text-wrap">{job?.job_description}</pre>
 
       <div className="flex items-center justify-start gap-6 mt-6">
         <p className="font-bold">Share Job:</p>

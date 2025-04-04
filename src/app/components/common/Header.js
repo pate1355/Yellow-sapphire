@@ -1,8 +1,7 @@
-import { CiBookmark, CiSearch } from "react-icons/ci";
+import { CiSearch } from "react-icons/ci";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
 function Header({ setQuery, savedJobs, setSavedJobs }) {
   const [inputValue, setInputValue] = useState("");
@@ -14,9 +13,8 @@ function Header({ setQuery, savedJobs, setSavedJobs }) {
     <>
       <header className="p-3 bg-[url(/bannerBG4.jpg)] bg-cover">
         <Navbar savedJobs={savedJobs} setSavedJobs={setSavedJobs} />
-        {/* Hero Section */}
+
         <section className="flex flex-col justify-center items-center py-8 gap-6">
-          {/* Logo */}
           <div className="flex items-center gap-4">
             <Link href="/" aria-label="Home">
               <Image
@@ -30,7 +28,7 @@ function Header({ setQuery, savedJobs, setSavedJobs }) {
               YELLOW SAPPHIRE
             </h1>
           </div>
-          {/* Job Search Form */}
+
           <form
             className="flex"
             onSubmit={handleSubmit}

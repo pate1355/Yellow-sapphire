@@ -4,7 +4,6 @@ import SavedPageHeader from "../components/SavedPageComponents/SavedPageHeader";
 import JobCard from "../components/ReusableComponets/jobCard";
 import Image from "next/image";
 import Footer from "../components/common/Footer";
-
 import { useJobs } from "../context/JobContext";
 
 const SavedJobs = () => {
@@ -48,7 +47,6 @@ const SavedJobs = () => {
                 <Image
                   src="/No-Saved-Job.png"
                   alt="No saved jobs Image"
-                  // className="w-1/2 md:w-1/3 lg:w-1/4"
                   width={300}
                   height={300}
                 />
@@ -59,6 +57,7 @@ const SavedJobs = () => {
             )}
           </div>
         </div>
+
         <Footer />
       </div>
     </>

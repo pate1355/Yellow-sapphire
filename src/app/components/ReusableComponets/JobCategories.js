@@ -3,8 +3,6 @@ import React, { useState } from "react";
 const JobCategories = ({ categories, jobCounts, jobCategory, setCategory }) => {
   const [showMore, setShowMore] = useState(false);
 
-  console.log("Job Categories:", jobCategory);
-
   const category = categories.slice(0, showMore ? categories : 5);
   const moreCategory = categories;
 
@@ -34,7 +32,6 @@ const JobCategories = ({ categories, jobCounts, jobCategory, setCategory }) => {
               cat.toLowerCase().replace(/ & /g, "_").replace(/ /g, "_")
             ] || 0}
           </span>{" "}
-          {/* Dynamically display job count */}
         </div>
       ))}
 
