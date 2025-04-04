@@ -16,7 +16,10 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "YELLOW SAPPHIRE",
   icons: {
-    icon: "/yellow-sapphire.ico",
+    icon: [
+      { url: "/yellow-sapphire.ico", type: "image/x-icon" },
+      { url: "/YellowSapphire-icon.png", type: "image/png" },
+    ],
     shortcut: "/yellow-sapphire.ico",
     apple: "/yellow-sapphire.ico",
   },
