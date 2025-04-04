@@ -3,6 +3,7 @@ import { React } from "react";
 import SavedPageHeader from "../components/SavedPageComponents/SavedPageHeader";
 import JobCard from "../components/ReusableComponets/jobCard";
 import Image from "next/image";
+import Footer from "../components/common/Footer";
 
 import { useJobs } from "../context/JobContext";
 
@@ -11,7 +12,7 @@ const SavedJobs = () => {
 
   return (
     <>
-      <div className="bg-white min-h-screen">
+      <div className="bg-white ">
         <SavedPageHeader />
 
         <div className="flex flex-col md:items-center justify-center mt-4 p-6 ">
@@ -58,6 +59,7 @@ const SavedJobs = () => {
             )}
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );
