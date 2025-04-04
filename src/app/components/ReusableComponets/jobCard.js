@@ -9,6 +9,50 @@ const JobCard = (props) => {
   const job = props;
   const { query } = props;
   const { setSavedJobs, savedJobs } = props;
+  const [jobPostedDate, setJobPostedDate] = useState("");
+
+  useEffect(() => {
+    const postedDate = new Date(job?.posted_date);
+    console.log("Posted date:", postedDate);
+
+    const now = new Date();
+    const diffInMs = now - postedDate;
+    const diffInHours = diffInMs / (1000 * 60 * 60);
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+
+    console.log("Difference in hours:", Math.round(diffInHours));
+    console.log("Difference in days:", Math.round(diffInDays));
+
+    // Check if the job was posted within the last 24 hours
+    if (diffInHours <= 24) {
+      console.log("Job posted within the last 24 hours");
+      setJobPostedDate("24 hours ago");
+    } else if (diffInDays === 7) {
+      console.log("Job posted 1 week ago");
+      setJobPostedDate("1 week ago");
+    } else if (diffInDays === 14) {
+      console.log("Job posted 2 weeks ago");
+      setJobPostedDate("2 weeks ago");
+    } else if (diffInDays === 21) {
+      console.log("Job posted 3 weeks ago");
+      setJobPostedDate("3 weeks ago");
+    } else if (diffInDays === 28) {
+      console.log("Job posted 4 weeks ago");
+      setJobPostedDate("4 weeks ago");
+    } else if (diffInDays === 30) {
+      console.log("Job posted a month ago");
+      setJobPostedDate("1 month ago");
+    } else if (
+      diffInDays < 30 &&
+      diffInDays !== 7 &&
+      diffInDays !== 14 &&
+      diffInDays !== 21 &&
+      diffInDays !== 28
+    ) {
+      console.log(`Job posted ${Math.round(diffInDays)} days ago`);
+      setJobPostedDate(`${Math.round(diffInDays)} days ago`);
+    }
+  }, [job]);
 
   useEffect(() => {
     setBookmarked(savedJobs.some((savedJob) => savedJob.id === job.id));
@@ -35,7 +79,7 @@ const JobCard = (props) => {
     <div className="w-full   flex flex-col gap-4 bg-[#FFF2DE] p-6 rounded-[20px] shadow-md">
       <div className="flex justify-between items-center">
         <div className="flex items-center justify-center bg-white p-2 rounded-[8px] border border-black">
-          <span className="text-gray-600 text-sm">1 Week ago</span>
+          <span className="text-gray-600 text-sm">{jobPostedDate}</span>
         </div>
 
         <motion.button
