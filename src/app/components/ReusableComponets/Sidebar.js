@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { MapPin } from "lucide-react";
 import JobCategories from "./JobCategories";
 import SalaryRangeSlider from "./SalaryRangeSlider";
+import { useJobs } from "../../context/JobContext";
 
 const Sidebar = ({
   setJobType,
@@ -18,8 +19,54 @@ const Sidebar = ({
   datePosted,
   setLocation,
 }) => {
+  const { items } = useJobs();
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [last24HoursCount, setLast24HoursCount] = useState(0);
+  const [lastWeekCount, setLastWeekCount] = useState(0);
+  const [last2WeeksCount, setLast2WeeksCount] = useState(0);
+  const [lastMonthCount, setLastMonthCount] = useState(0);
+
+  useEffect(() => {
+    let last24 = 0;
+    let lastWeek = 0;
+    let last2Weeks = 0;
+    let lastMonth = 0;
+
+    items.forEach((item) => {
+      const postedDate = new Date(item?.posted_date);
+      const now = new Date();
+      const diffInMs = now - postedDate;
+      const diffInHours = diffInMs / (1000 * 60 * 60);
+      const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+
+      if (diffInHours <= 24) {
+        last24++;
+      }
+      if (diffInDays <= 7) {
+        lastWeek++;
+      }
+      if (diffInDays <= 14) {
+        last2Weeks++;
+      }
+      if (diffInDays <= 30) {
+        lastMonth++;
+      }
+    });
+
+    setLast24HoursCount(last24);
+    setLastWeekCount(lastWeek);
+    setLast2WeeksCount(last2Weeks);
+    setLastMonthCount(lastMonth);
+  }, [items]);
+
+  const datePostedOptions = [
+    { All: items.length },
+    { "Last 24 Hours": last24HoursCount },
+    { "Last Week": lastWeekCount },
+    { "Last 2 Weeks": last2WeeksCount },
+    { "Last Month": lastMonthCount },
+  ];
 
   useEffect(() => {
     const getLocation = () => {
@@ -256,28 +303,26 @@ const Sidebar = ({
         <legend className="text-sm font-semibold block mb-2">
           Date Posted
         </legend>
-        {[
-          "All",
-          "Last 24 Hours",
-          "Last Week",
-          "Last 2 Weeks",
-          "Last Month",
-        ].map((date) => (
-          <div key={date} className="flex justify-between">
-            <label className="flex items-center">
-              <input
-                type="radio"
-                name="datePosted"
-                value={date}
-                checked={datePosted === date}
-                onChange={() => setDatePosted(date)}
-                className="mr-2 appearance-none w-5 h-5 border-2 rounded-sm bg-white hover:border-black checked:bg-black focus:outline-none"
-              />
-              {date}
-            </label>
-            <span className="text-gray-600">10</span>
-          </div>
-        ))}
+        {datePostedOptions.map((option) => {
+          const date = Object.keys(option)[0];
+          const count = Object.values(option)[0];
+          return (
+            <div key={date} className="flex justify-between">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="datePosted"
+                  value={date}
+                  checked={datePosted === date}
+                  onChange={() => setDatePosted(date)}
+                  className="mr-2 appearance-none w-5 h-5 border-2 rounded-sm bg-white hover:border-black checked:bg-black focus:outline-none"
+                />
+                {date}
+              </label>
+              <span className="text-gray-600">{count}</span>
+            </div>
+          );
+        })}
       </fieldset>
     </aside>
   );
