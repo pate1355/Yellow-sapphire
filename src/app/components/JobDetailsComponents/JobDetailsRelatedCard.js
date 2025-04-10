@@ -152,7 +152,7 @@ const JobDetailsRelatedCard = ({ job }) => {
             </h2>
             <h1 className="text-sm text-textSubtitle">{job?.company_name}</h1>
             <p className="text-sm text-textBody mt-1 max-w-screen-lg">
-              {extractJobOverview(job?.job_description)}
+              {job?.job_overview}
             </p>
           </div>
 
