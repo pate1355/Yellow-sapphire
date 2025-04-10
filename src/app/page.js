@@ -274,55 +274,56 @@ export default function Home() {
       />
 
       <main>
-        {loading ? (
-          <section
-            className="flex justify-center items-center w-full bg-white"
-            aria-live="polite"
-          >
-            <Loading />
-          </section>
-        ) : (
-          <section
-            className="flex flex-col md:flex-row gap-2 p-4 bg-white"
-            aria-label="Job Results"
-          >
-            <SidebarSection
-              jobCount={jobCount}
-              setJobType={setJobType}
-              jobType={jobType}
-              setExperienceLevel={setExperienceLevel}
-              experienceLevel={experienceLevel}
-              setCategory={setCategory}
-              category={category}
-              isSidebarOpen={isSidebarOpen}
-              setIsSidebarOpen={setIsSidebarOpen}
-              setMinOfferedSalary={setMinOfferedSalary}
-              setMaxOfferedSalary={setMaxOfferedSalary}
-              setDatePosted={setDatePosted}
-              datePosted={datePosted}
-              setLocation={setLocation}
-            />
-
-            <JobResultsListing
-              totalJobsFound={totalJobsFound}
-              currentJobs={currentJobs}
-              setCurrentPage={setCurrentPage}
-              totalPages={totalPages}
-              query={query}
-              items={items}
-              storedQuery={storedQuery}
-              savedJobs={savedJobs}
-              setSavedJobs={setSavedJobs}
-              category={category}
-              location={location}
-              minOfferedSalary={minOfferedSalary}
-              maxOfferedSalary={maxOfferedSalary}
-              datePosted={datePosted}
-              jobType={jobType}
-              experienceLevel={experienceLevel}
-            />
-          </section>
-        )}
+        <section className="p-6 bg-white  px-4">
+          {loading ? (
+            <section
+              className="flex justify-center items-center w-full bg-white"
+              aria-live="polite"
+            >
+              <Loading />
+            </section>
+          ) : (
+            <section
+              className="flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-10 p-4 bg-white max-w-screen-xl mx-auto"
+              aria-label="Job Results"
+            >
+              <SidebarSection
+                jobCount={jobCount}
+                setJobType={setJobType}
+                jobType={jobType}
+                setExperienceLevel={setExperienceLevel}
+                experienceLevel={experienceLevel}
+                setCategory={setCategory}
+                category={category}
+                isSidebarOpen={isSidebarOpen}
+                setIsSidebarOpen={setIsSidebarOpen}
+                setMinOfferedSalary={setMinOfferedSalary}
+                setMaxOfferedSalary={setMaxOfferedSalary}
+                setDatePosted={setDatePosted}
+                datePosted={datePosted}
+                setLocation={setLocation}
+              />
+              <JobResultsListing
+                totalJobsFound={totalJobsFound}
+                currentJobs={currentJobs}
+                setCurrentPage={setCurrentPage}
+                totalPages={totalPages}
+                query={query}
+                items={items}
+                storedQuery={storedQuery}
+                savedJobs={savedJobs}
+                setSavedJobs={setSavedJobs}
+                category={category}
+                location={location}
+                minOfferedSalary={minOfferedSalary}
+                maxOfferedSalary={maxOfferedSalary}
+                datePosted={datePosted}
+                jobType={jobType}
+                experienceLevel={experienceLevel}
+              />
+            </section>
+          )}
+        </section>
 
         <TopCompaniesSection />
       </main>
@@ -430,10 +431,10 @@ const JobResultsListing = ({
           className="flex flex-col justify-between gap-4 w-full"
           aria-label="Job Listings"
         >
-          <ul className="flex flex-col gap-4 w-full">
+          <ul className="flex flex-col flex-wrap gap-6 md:gap-8 lg:gap-10 w-full">
             <li
               key="sort-dropdown"
-              className="flex flex-col-reverse md:flex-row justify-between  items-center w-full  text-md gap-3"
+              className="flex flex-col-reverse md:flex-row justify-between  items-start w-full  text-md  gap-6"
             >
               <SortDropDownMenu
                 totalJobsFound={totalJobsFound}
@@ -446,7 +447,7 @@ const JobResultsListing = ({
             {currentJobs.map((item) => (
               <JobCard
                 key={item.id}
-                className="w-full sm:w-auto"
+                className="w-full md:w-1/2 lg:w-1/3"
                 {...item}
                 savedJobs={savedJobs}
                 setSavedJobs={setSavedJobs}
