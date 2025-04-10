@@ -27,7 +27,7 @@ const Navbar = () => {
               </span>
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link href="/about">
               <span
                 className={
@@ -39,7 +39,7 @@ const Navbar = () => {
                 About Us
               </span>
             </Link>
-          </li>
+          </li> */}
         </ul>
 
         <Link
