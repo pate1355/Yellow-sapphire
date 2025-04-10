@@ -31,10 +31,10 @@ const SavedJobs = () => {
               savedJobs.map((job) => (
                 <ul
                   key={job.id}
-                  className="flex flex-col items-center justify-center gap-18"
+                  className="flex flex-col items-center justify-center gap-18 w-full"
                 >
                   <JobCard
-                    className="w-full sm:w-auto"
+                    className="w-full md:w-1/2 lg:w-1/3"
                     key={job.id}
                     {...job}
                     savedJobs={savedJobs}
