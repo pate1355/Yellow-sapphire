@@ -251,7 +251,7 @@ const Sidebar = ({
               />
               {type}
             </div>
-            <span className="text-gray-700 font-medium">
+            <span className="text-gray-600 ">
               {jobCount?.[type.toLowerCase().replace(" ", "_")] || 0}
             </span>
           </label>
