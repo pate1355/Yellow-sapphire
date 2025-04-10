@@ -1,7 +1,7 @@
 import Image from "next/image";
 export default function Footer() {
   return (
-    <footer className="bg-[#f4b860] py-8 px-10 flex justify-between items-center">
+    <div className="bg-[#f4b860] py-20 px-8 md:px-10 flex flex-col md:flex-row justify-between items-center gap-8 ">
       <div>
         <Image
           src="/YellowSapphireIcon.png"
@@ -12,7 +12,7 @@ export default function Footer() {
       </div>
 
       <nav aria-label="Footer Navigation">
-        <ul className="flex flex-col items-start border-l border-black pl-4 space-y-2">
+        <ul className="flex flex-col items-start border-l border-black pl-4 gap-4 md:gap-6">
           <li>
             <a href="#" className="text-black hover:underline">
               Home
@@ -26,8 +26,8 @@ export default function Footer() {
         </ul>
       </nav>
 
-      <div className="text-right">
-        <ul className="space-y-2">
+      <div className="text-left md:text-right">
+        <ul className="flex md:flex-col items-start gap-4 md:gap-6">
           <li>
             <a href="#" className="text-black hover:underline">
               Privacy Policy
@@ -40,6 +40,6 @@ export default function Footer() {
           </li>
         </ul>
       </div>
-    </footer>
+    </div>
   );
 }
