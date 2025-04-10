@@ -84,8 +84,8 @@ export default function JobDetailsTitleCard({ job }) {
           >
             <Bookmark
               className="w-8 h-8 transition-all duration-300"
-              color={bookmarked ? "#FFBD59" : "gray"}
-              fill={bookmarked ? "#FFBD59" : "none"}
+              color={bookmarked ? "black" : "gray"}
+              fill={bookmarked ? "black" : "none"}
             />
           </motion.div>
         </motion.button>
