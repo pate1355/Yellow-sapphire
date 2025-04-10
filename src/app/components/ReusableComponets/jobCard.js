@@ -101,7 +101,7 @@ const JobCard = (props) => {
         <h2 className="text-lg  text-textTitle font-bold">{job?.job_title}</h2>
         <h1 className="text-sm text-textSubtitle">{job?.company_name}</h1>
         <p className="text-sm text-textBody mt-1 max-w-screen-lg">
-          {extractJobOverview(job?.job_description)}
+          {job?.job_overview}
         </p>
       </div>
       <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch">
