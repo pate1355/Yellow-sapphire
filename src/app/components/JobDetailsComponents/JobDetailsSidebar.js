@@ -1,7 +1,12 @@
-import { BiMedal } from "react-icons/bi";
-import { CiLocationOn, CiUser } from "react-icons/ci";
-import { GoClock } from "react-icons/go";
-import { LuBriefcaseBusiness, LuGraduationCap, LuWallet } from "react-icons/lu";
+import {
+  User,
+  Clock,
+  BriefcaseBusiness,
+  Medal,
+  GraduationCap,
+  Wallet,
+  MapPin,
+} from "lucide-react";
 import Link from "next/link";
 
 function JobDetailsSidebar({ job }) {
@@ -16,61 +21,75 @@ function JobDetailsSidebar({ job }) {
         </Link>
       </div>
 
-      <p className="mt-6 text-lg">Job Overview</p>
+      <p className="mt-6 text-lg font-bold">Job Overview</p>
 
       <div className="flex gap-3 my-6 items-center">
-        <CiUser className="text-2xl" />
+        <User />
         <div>
-          <p className="font-semibold">Job Title</p>
-          <p className="text-sm font-thin">{job?.job_title}</p>
+          <p className="font-semibold text-base">Job Title</p>
+          <p className="text-base font-normal text-[#6C757D]">
+            {job?.job_title}
+          </p>
         </div>
       </div>
 
       <div className="flex gap-3 my-6 items-center">
-        <GoClock className="text-2xl" />
+        <Clock />
         <div>
-          <p className="font-semibold">Job Type</p>
-          <p className="text-sm font-thin">{job?.job_type}</p>
+          <p className="font-semibold text-base">Job Type</p>
+          <p className="text-base font-normal text-[#6C757D]">
+            {job?.job_type}
+          </p>
         </div>
       </div>
 
       <div className="flex gap-3 my-6 items-center">
-        <LuBriefcaseBusiness className="text-2xl" />
+        <BriefcaseBusiness />
         <div>
-          <p className="font-semibold">Category</p>
-          <p className="text-sm font-thin">{job?.job_category}</p>
+          <p className="font-semibold text-base">Category</p>
+          <p className="text-base font-normal text-[#6C757D]">
+            {job?.job_category}
+          </p>
         </div>
       </div>
 
       <div className="flex gap-3 my-6 items-center">
-        <BiMedal className="text-2xl" />
+        <Medal />
         <div>
-          <p className="font-semibold">Experience Required</p>
-          <p className="text-sm font-thin">{job?.experience_required}</p>
+          <p className="font-semibold text-base">Experience</p>
+          <p className="text-base font-normal text-[#6C757D]">
+            {job?.experience_required}
+          </p>
         </div>
       </div>
 
       <div className="flex gap-3 my-6 items-center">
-        <LuGraduationCap className="text-2xl" />
+        <GraduationCap />
         <div>
-          <p className="font-semibold">Education Required</p>
-          <p className="text-sm font-thin">{job?.education_required}</p>
+          <p className="font-semibold text-base">Education</p>
+          <p className="text-base font-normal text-[#6C757D]">
+            {job?.education_required}
+          </p>
         </div>
       </div>
 
       <div className="flex gap-3 my-6 items-center">
-        <LuWallet className="text-2xl" />
+        <Wallet />
         <div>
-          <p className="font-semibold">Offered Salary</p>
-          <p className="text-sm font-thin">$ {job?.offered_salary}</p>
+          <p className="font-semibold text-base">Offered Salary</p>
+          <p className="text-base font-normal text-[#6C757D]">
+            $ {job?.offered_salary}
+          </p>
         </div>
       </div>
 
       <div className="flex gap-3 mt-6 items-center">
-        <CiLocationOn className="text-2xl" />
+        <MapPin />
         <div>
-          <p className="font-semibold">Location</p>
-          <p className="text-sm font-thin">{job?.location.slice(0, 17)}</p>
+          <p className="font-semibold text-base">Location</p>
+          <p className="text-base font-normal text-[#6C757D]">
+            {job?.location.slice(0, 17)}
+          </p>
         </div>
       </div>
     </div>
