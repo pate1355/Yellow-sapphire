@@ -14,7 +14,7 @@ export default function Footer() {
       <nav aria-label="Footer Navigation">
         <ul className="flex flex-col items-start border-l border-black pl-4 gap-4 md:gap-6">
           <li>
-            <a href="#" className="text-black hover:underline">
+            <a href="./" className="text-black hover:underline">
               Home
             </a>
           </li>
