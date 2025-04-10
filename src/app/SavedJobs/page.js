@@ -17,9 +17,9 @@ const SavedJobs = () => {
         <div className="flex flex-col md:items-center justify-center mt-4 p-6 ">
           <div
             className={`${
-              savedJobs.length > 0 ? "lg:w-[50rem]" : ""
+              savedJobs.length > 0 ? "max-w-screen-xl mx-auto" : ""
             }  flex flex-col items-start justify-center ${
-              savedJobs.length > 0 ? "gap-6 md:gap-4" : "gap-16"
+              savedJobs.length > 0 ? "gap-6 md:gap-8 lg:gap-10" : "gap-16"
             }`}
           >
             <div className="flex items-start gap-4 md:w-[40rem]">
